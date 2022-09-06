@@ -26,7 +26,7 @@ a {
 }
 
 .category-btn:hover {
-  background-color: #fc1503 !important;
+  background-color: hsl(0, 100%, 32%) !important;
   color: white !important;
 }
 

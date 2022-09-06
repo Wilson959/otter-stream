@@ -23,6 +23,7 @@ const Feed = () => {
             md: "92vh",
           },
           borderRight: "1px solid #3d3d3d",
+          backgroundColor: "#2A272A",
           px: { sx: 0, md: 2 },
         }}
       >
@@ -47,7 +48,7 @@ const Feed = () => {
           mb={2}
           sx={{ color: "#fff" }}
         >
-          {selectedCategory} <span style={{ color: "#f31503" }}>videos</span>
+          {selectedCategory} <span style={{ color: "hsl(0, 100%, 52%)" }}>videos</span>
         </Typography>
 
         <Videos videos={videos} />
