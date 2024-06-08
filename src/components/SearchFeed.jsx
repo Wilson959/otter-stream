@@ -1,20 +1,20 @@
-import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-
+import { useQuery } from "@tanstack/react-query";
 import { Box, Typography } from "@mui/material";
 
 import { Videos } from "./";
 import { fetchFromAPI } from "../utils/fetchFromAPI";
 
 const SearchFeed = () => {
-  const [videos, setVideos] = useState([]);
   const { searchTerm } = useParams();
 
-  useEffect(() => {
-    fetchFromAPI(`search?part=snippet&q=${searchTerm}`).then((data) =>
-      setVideos(data.items)
-    );
-  }, [searchTerm]);
+  const { data: videos } = useQuery({
+    queryKey: ["search", searchTerm],
+    queryFn: async () => {
+      const result = await fetchFromAPI(`search?part=snippet&q=${searchTerm}`);
+      return result.items;
+    },
+  });
 
   return (
     <Box p={2} sx={{ overflowY: "auto", height: "90vh", flex: 2 }}>
