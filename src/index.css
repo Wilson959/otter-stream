@@ -1,9 +1,32 @@
-html,
-body {
+* {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
+
+:root {
+  --text-primary: #5FBFF9;
+  --text-primary-dark: hsl(202, 93%, 47%);
+  --bg-primary: #051014;
+  --bg-secondary: #2A272A;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+a,
+span,
+button,
+input,
+* {
+  font-family: "Roboto", "Arial", sans-serif;
+  font-optical-sizing: auto;
+}
+
 
 a {
   text-decoration: none;
@@ -11,7 +34,7 @@ a {
 }
 
 ::-webkit-scrollbar {
-  width: 0px;
+  width: 5px;
   height: 5px;
 }
 
@@ -26,7 +49,7 @@ a {
 }
 
 .category-btn:hover {
-  background-color: hsl(0, 100%, 32%) !important;
+  background-color: var(--text-primary-dark) !important;
   color: white !important;
 }
 
@@ -34,15 +57,52 @@ a {
   color: white !important;
 }
 
+.category-btn:hover .category-btn-hover {
+  color: white !important;
+  opacity: 1 !important;
+}
+
 .react-player {
-  height: 77vh !important;
+  height: 70vh !important;
   width: 100% !important;
 }
+
+.spinner {
+  width: 40px;
+  height: 40px;
+  border: 3px solid white;
+  border-top-color: transparent;
+  opacity: 0.8;
+  border-radius: 100px;
+  animation: loading 1s linear infinite;
+  margin: 1em;
+}
+
+@keyframes loading {
+  from {
+    rotate: 0deg;
+  }
+
+  to {
+    rotate: 360deg;
+  }
+}
+
+@media (width > 768px) {
+  .feed {
+    height: calc(100vh - 80px);
+  }
+}
+
 
 .search-bar {
   border: none;
   outline: none;
   width: 350px;
+}
+
+.search-bar:focus {
+  border: "1px solid #e3e3e3",
 }
 
 .category-btn {
@@ -55,10 +115,10 @@ a {
   background: transparent;
   outline: none;
   border: none;
+  border-radius: 6px;
 
-  padding: 7px 15px;
-  margin: 10px 0px;
-  border-radius: 20px;
+  padding: 10px 15px;
+  margin-bottom: 10px;
   transition: all 0.3s ease;
 }
 
@@ -82,6 +142,7 @@ a {
   .react-player {
     height: 45vh !important;
   }
+
   .search-bar {
     width: 200px;
   }
