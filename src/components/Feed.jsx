@@ -1,30 +1,32 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { Box, Stack, Typography } from "@mui/material";
+import { useQuery } from "@tanstack/react-query";
 
 import { Sidebar, Videos } from "./";
 import { fetchFromAPI } from "../utils/fetchFromAPI";
+import { getCurrentYear } from "../utils/";
 
 const Feed = () => {
-  const [selectedCategory, setSelectedCategory] = useState("New");
-  const [videos, setVideos] = useState([]);
+  const [selectedCategory, setSelectedCategory] = useState("Latest");
 
-  useEffect(() => {
-    fetchFromAPI(`search?part=snippet&q=${selectedCategory}`).then((data) =>
-      setVideos(data.items)
-    );
-  }, [selectedCategory]);
+  const { data: videos } = useQuery({
+    queryKey: ["videos", selectedCategory],
+    queryFn: async () => {
+      const data = await fetchFromAPI(
+        `search?part=snippet&q=${selectedCategory}`
+      );
+      return data.items;
+    },
+  });
 
   return (
-    <Stack sx={{ flexDirection: { sx: "column", md: "row" } }}>
+    <Stack sx={{ flexDirection: { sx: "column", md: "row" } }} className="feed">
       <Box
+        position="relative"
         sx={{
-          height: {
-            sx: "auto",
-            md: "92vh",
-          },
+          height: { sx: "auto" },
+          display: "flex",
           borderRight: "1px solid #3d3d3d",
-          backgroundColor: "#2A272A",
-          px: { sx: 0, md: 2 },
         }}
       >
         <Sidebar
@@ -34,21 +36,35 @@ const Feed = () => {
 
         <Typography
           className="copyright"
+          bottom={0}
           variant="body2"
-          sx={{ mt: 1.5, color: "#fff" }}
+          display="flex"
+          justifyContent="center"
+          alignItems="center"
+          fontFamily="Roboto, sans-serif"
+          sx={{
+            py: 1.5,
+            color: "gray",
+            position: "absolute",
+            backgroundColor: "var(--bg-secondary)",
+            width: "100%",
+          }}
         >
-          &copy;Copyright 2022 Riderx Media
+          &copy;Copyright{" "}
+          <span style={{ marginInline: ".4em" }}>{getCurrentYear()}</span> Otter
+          Stream
         </Typography>
       </Box>
 
-      <Box p={2} sx={{ overflowY: "auto", height: "90vh", flex: 2 }}>
+      <Box p={2} sx={{ overflowY: "auto", flex: 2, aspectRatio: "1/1" }}>
         <Typography
           variant="h4"
           fontWeight="bold"
           mb={2}
           sx={{ color: "#fff" }}
         >
-          {selectedCategory} <span style={{ color: "hsl(0, 100%, 52%)" }}>videos</span>
+          {selectedCategory}{" "}
+          <span style={{ color: "var(--text-primary)" }}>videos</span>
         </Typography>
 
         <Videos videos={videos} />
