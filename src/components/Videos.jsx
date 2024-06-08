@@ -4,8 +4,7 @@ import { Stack, Box } from "@mui/material";
 import { VideoCard, ChannelCard } from "./";
 
 const Videos = ({ videos, direction }) => {
-  if (!videos?.length)
-    return <h3 style={{ color: "#fff", opacity: 0.8 }}>Loading...</h3>;
+  if (!videos?.length) return <div className="spinner" />;
 
   return (
     <Stack
