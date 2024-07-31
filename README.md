@@ -1,1 +1,2 @@
-# youtube-2.0
+# Otter Stream
+Video streaming platform
